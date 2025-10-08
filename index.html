@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Painel Administrativo - Rifa Solidária</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060818;--card:#0f172a;--text:#eaf2ff;--muted:#a7b3c8;
+  --line:#1e2a3f;--accent:#00e5ff;--warn:#f59e0b;--ok:#16a34a;--bad:#ef4444;
+}
+body{margin:0;background:radial-gradient(900px 600px at 50% -100px,#0a0f2c,#020412 80%);font-family:Inter;color:var(--text)}
+h1{font-family:Orbitron;text-align:center;color:var(--warn);text-shadow:0 0 10px rgba(245,158,11,.6);margin:20px 0;}
+.table-wrap{max-width:1000px;margin:0 auto 40px;background:var(--card);border-radius:12px;box-shadow:0 0 15px rgba(0,229,255,.08);padding:16px;border:1px solid var(--line);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid #22304a;padding:8px 10px;text-align:left}
+th{color:var(--accent);text-transform:uppercase;font-size:12px;}
+tr:hover{background:#0b1325}
+.status{padding:4px 8px;border-radius:6px;font-size:12px;text-align:center}
+.RESERVADO{background:#22314a;color:var(--warn)}
+.PAGO{background:#153a2a;color:#bdfcc5}
+.CANCELADO{background:#3b1c1c;color:#ff9e9e}
+.ENTREGUE{background:#133042;color:#aee9ff}
+.btn{border:none;border-radius:6px;padding:6px 10px;font-weight:600;cursor:pointer;margin:2px;font-size:12px;transition:.2s}
+.btn:hover{filter:brightness(1.2)}
+.ok{background:linear-gradient(90deg,#16a34a,#22c55e);color:#fff}
+.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
+.bad{background:linear-gradient(90deg,#dc2626,#ef4444);color:#fff}
+.refresh{display:block;margin:10px auto 20px;background:linear-gradient(90deg,#00e5ff,#9333ea);color:#111;font-weight:700;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;box-shadow:0 0 12px rgba(0,229,255,.4)}
+.refresh:hover{filter:brightness(1.1)}
+footer{text-align:center;font-size:12px;color:var(--muted);margin-bottom:20px}
+@media(max-width:768px){table{font-size:12px}}
+</style>
+</head>
+<body>
+
+<h1>🎟️ Painel da Rifa Solidária</h1>
+<button class="refresh" onclick="loadData()">🔄 Atualizar Lista</button>
+<div class="table-wrap">
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Números</th>
+        <th>Qtd</th>
+        <th>Total (R$)</th>
+        <th>Data</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<footer>© 2025 Rifa Solidária • Painel Administrativo</footer>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8JTKtp5t1sBkbKOuQV4z47hR1bX2vHejdkHEelRrFNoEp_DfClO0SYE1dNI-0WEm61A/exec"; // 👈 cole sua URL aqui
+
+async function loadData(){
+  const tbody=document.querySelector("#tabela tbody");
+  tbody.innerHTML="<tr><td colspan='9'>⏳ Carregando...</td></tr>";
+  try{
+    const res=await fetch(`${SCRIPT_URL}?action=admin`);
+    const data=await res.json();
+    tbody.innerHTML="";
+    if(!data.length){tbody.innerHTML="<tr><td colspan='9'>Nenhum registro encontrado.</td></tr>";return;}
+
+    data.forEach(r=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`
+        <td>${r.nome}</td>
+        <td>${r.telefone}</td>
+        <td>${r.email}</td>
+        <td>${r.numeros}</td>
+        <td>${r.qtd}</td>
+        <td>${r.total}</td>
+        <td>${r.data}</td>
+        <td><span class="status ${r.status}">${r.status}</span></td>
+        <td>
+          <button class="btn ok" onclick="atualizarStatus('${r.telefone}','PAGO')">Pago</button>
+          <button class="btn warn" onclick="atualizarStatus('${r.telefone}','ENTREGUE')">Entregue</button>
+          <button class="btn bad" onclick="atualizarStatus('${r.telefone}','CANCELADO')">Cancelar</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }catch(e){
+    tbody.innerHTML="<tr><td colspan='9'>Erro ao carregar.</td></tr>";
+  }
+}
+
+async function atualizarStatus(tel,status){
+  if(!confirm(`Confirmar alterar status de ${tel} para ${status}?`)) return;
+  try{
+    const res=await fetch(SCRIPT_URL,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({action:"alterar_status",telefone:tel,status})
+    });
+    const txt=await res.text();
+    if(txt.includes("STATUS_ATUALIZADO")){
+      alert("✅ Status atualizado!");
+      loadData();
+    }else{
+      alert("❌ Falha ao atualizar: "+txt);
+    }
+  }catch(e){alert("Erro de conexão.");}
+}
+
+loadData();
+</script>
+</body>
+</html>
