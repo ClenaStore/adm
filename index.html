@@ -7,132 +7,67 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #05091b;
-  --card: #0f172a;
-  --accent: #00e5ff;
-  --text: #eaf2ff;
-  --muted: #a7b3c8;
-  --ok: #16a34a;
-  --warn: #f59e0b;
-  --bad: #ef4444;
-  --line: #1e2a3f;
+  --bg:#05091b;--card:#0f172a;--accent:#00e5ff;--text:#eaf2ff;
+  --muted:#a7b3c8;--ok:#16a34a;--warn:#f59e0b;--bad:#ef4444;--line:#1e2a3f;
 }
-* {box-sizing: border-box; margin: 0; padding: 0;}
-body {
-  background: radial-gradient(circle at top, #091235, #030611 80%);
-  color: var(--text);
-  font-family: "Inter", system-ui;
-  min-height: 100vh;
-  padding: 12px;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at top,#091235,#030611 80%);
+  color:var(--text);font-family:"Inter",system-ui;min-height:100vh;padding:12px;
 }
-header {
-  text-align: center;
-  margin-bottom: 12px;
+header{text-align:center;margin-bottom:12px}
+header h1{font-family:"Orbitron",sans-serif;color:var(--accent);font-size:1.4rem;text-shadow:0 0 10px var(--accent)}
+.refresh{
+  display:block;width:100%;padding:12px;background:linear-gradient(90deg,#00e5ff,#9333ea);
+  color:#fff;border:none;border-radius:10px;font-weight:600;font-size:1rem;margin:10px 0 16px;
+  box-shadow:0 0 10px rgba(0,229,255,.4)
 }
-header h1 {
-  font-family: "Orbitron", sans-serif;
-  color: var(--accent);
-  font-size: 1.4rem;
-  text-shadow: 0 0 10px var(--accent);
+.refresh:active{transform:scale(0.97)}
+.list{display:flex;flex-direction:column;gap:14px}
+.card{
+  background:var(--card);border-radius:14px;border:1px solid var(--line);
+  box-shadow:0 0 10px rgba(0,0,0,.4);padding:12px 14px;display:flex;flex-direction:column;gap:8px;position:relative
 }
-.refresh {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, #00e5ff, #9333ea);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  margin: 10px 0 16px;
-  box-shadow: 0 0 10px rgba(0, 229, 255, .4);
+.card h2{font-size:1.1rem;color:var(--accent);margin-bottom:4px}
+.card .info{font-size:0.9rem;line-height:1.4;color:var(--text)}
+.status{padding:6px 10px;border-radius:6px;font-size:0.8rem;font-weight:600;text-align:center;width:fit-content}
+.RESERVADO{background:#22314a;color:var(--warn)}
+.PAGO{background:#153a2a;color:#bdfcc5}
+.CANCELADO{background:#3b1c1c;color:#ff9e9e}
+.ENTREGUE{background:#133042;color:#aee9ff}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{background:#12223b;border:1px solid #22304a;padding:4px 8px;border-radius:8px;font-size:0.8rem;color:var(--text)}
+.actions{display:flex;gap:6px;margin-top:6px}
+.btn{
+  flex:1;padding:10px;border:none;border-radius:8px;color:#fff;
+  font-weight:600;font-size:0.85rem;cursor:pointer
 }
-.refresh:active {transform: scale(0.97);}
+.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
+.bad{background:linear-gradient(90deg,#dc2626,#ef4444)}
+.cobranca{background:linear-gradient(90deg,#00e5ff,#3b82f6)}
+.whats{background:linear-gradient(90deg,#25d366,#128c7e)}
+footer{text-align:center;color:var(--muted);font-size:0.8rem;margin-top:24px}
 
-/* cards de venda */
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+/* menu flutuante */
+.menu-status{
+  position:absolute;bottom:12px;right:12px;background:#102040;border:1px solid #1f2f49;
+  border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:bold;font-size:18px;cursor:pointer;box-shadow:0 0 10px rgba(0,229,255,.3)
 }
-.card {
-  background: var(--card);
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  box-shadow: 0 0 10px rgba(0,0,0,.4);
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.menu-options{
+  position:absolute;bottom:58px;right:12px;background:#0b1222;border:1px solid #1f2f49;
+  border-radius:10px;padding:6px;display:none;flex-direction:column;gap:6px;
 }
-.card h2 {
-  font-size: 1.1rem;
-  color: var(--accent);
-  margin-bottom: 4px;
+.menu-options button{
+  padding:8px;border:none;border-radius:6px;color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer
 }
-.card .info {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--text);
-}
-.status {
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-align: center;
-  width: fit-content;
-}
-.RESERVADO {background: #22314a; color: var(--warn);}
-.PAGO {background: #153a2a; color: #bdfcc5;}
-.CANCELADO {background: #3b1c1c; color: #ff9e9e;}
-.ENTREGUE {background: #133042; color: #aee9ff;}
-
-/* chips dos números */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-.chip {
-  background: #12223b;
-  border: 1px solid #22304a;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: var(--text);
-}
-
-/* botões de ação */
-.actions {
-  display: flex;
-  gap: 6px;
-  margin-top: 6px;
-}
-.btn {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-.ok {background: linear-gradient(90deg,#16a34a,#22c55e);}
-.warn {background: linear-gradient(90deg,#f59e0b,#facc15); color:#111;}
-.bad {background: linear-gradient(90deg,#dc2626,#ef4444);}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-  margin-top: 24px;
-}
+.menu-options button.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.menu-options button.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
+.menu-options button.bad{background:linear-gradient(90deg,#dc2626,#ef4444)}
 </style>
 </head>
 <body>
-
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
   <button class="refresh" onclick="loadData()">🔄 Atualizar Lista</button>
@@ -145,7 +80,7 @@ footer {
 <footer>© 2025 Rifa Solidária • Painel Mobile</footer>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlaa6vWFsgIIHN44TT48bxdWVRDiePKrABCzp0SpmeJhzWt3KY_UKIL2pjKTmPLLnlMg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlEj16YhXhQJSgdGXXMsgNngJl7VtHO9Wxqukwb1lXOAyUdhYIauzy-FunIZRvMCpDPg/exec";
 
 async function loadData(){
   const container=document.getElementById("lista");
@@ -163,11 +98,9 @@ async function loadData(){
       const div=document.createElement("div");
       div.className="card";
       const chips=(r.numeros||"")
-        .split(",")
-        .map(n=>n.trim())
-        .filter(Boolean)
-        .map(n=>`<span class='chip'>${n}</span>`)
-        .join("");
+        .split(",").map(n=>n.trim()).filter(Boolean)
+        .map(n=>`<span class='chip'>${n}</span>`).join("");
+
       div.innerHTML=`
         <h2>${r.nome||"Sem nome"}</h2>
         <div class="info">
@@ -179,9 +112,15 @@ async function loadData(){
         <div class="chips">${chips}</div>
         <span class="status ${r.status||""}">${r.status||""}</span>
         <div class="actions">
-          <button class="btn ok" onclick="atualizarStatus('${esc(r.telefone)}','PAGO')">Pago</button>
-          <button class="btn warn" onclick="atualizarStatus('${esc(r.telefone)}','ENTREGUE')">Entregue</button>
-          <button class="btn bad" onclick="atualizarStatus('${esc(r.telefone)}','CANCELADO')">Cancelar</button>
+          <button class="btn cobranca" onclick="enviarCobranca('${esc(r.telefone)}')">💰 Cobrança</button>
+          <button class="btn whats" onclick="abrirWhats('${esc(r.telefone)}','${r.nome||''}')">💬 WhatsApp</button>
+        </div>
+
+        <div class="menu-status" onclick="toggleMenu(this)">⚙️</div>
+        <div class="menu-options">
+          <button class="ok" onclick="atualizarStatus('${esc(r.telefone)}','PAGO')">Pago</button>
+          <button class="warn" onclick="atualizarStatus('${esc(r.telefone)}','ENTREGUE')">Entregue</button>
+          <button class="bad" onclick="atualizarStatus('${esc(r.telefone)}','CANCELADO')">Cancelar</button>
         </div>
       `;
       container.appendChild(div);
@@ -192,6 +131,11 @@ async function loadData(){
 }
 
 function esc(s){return String(s||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}
+
+function toggleMenu(el){
+  const menu=el.nextElementSibling;
+  menu.style.display = menu.style.display==="flex" ? "none" : "flex";
+}
 
 async function atualizarStatus(tel,status){
   if(!confirm(`Confirmar alterar status de ${tel} para ${status}?`)) return;
@@ -209,6 +153,26 @@ async function atualizarStatus(tel,status){
       alert("❌ Falha ao atualizar: "+txt);
     }
   }catch(e){alert("Erro de conexão.");}
+}
+
+async function enviarCobranca(tel){
+  if(!confirm(`Enviar e-mail de cobrança para ${tel}?`)) return;
+  try{
+    const res=await fetch(SCRIPT_URL,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({action:"enviar_cobranca",telefone:tel})
+    });
+    const txt=await res.text();
+    if(txt.includes("COBRANCA_ENVIADA")) alert("📩 Cobrança enviada com sucesso!");
+    else alert("❌ Falha ao enviar cobrança: "+txt);
+  }catch(e){alert("Erro de conexão.");}
+}
+
+function abrirWhats(tel,nome){
+  const numero=tel.replace(/\D/g,"");
+  const msg=`Olá ${nome||''}!%0AEstou entrando em contato sobre a Rifa Solidária.%0AConfira seu status ou realize o pagamento.`;
+  window.open(`https://wa.me/55${numero}?text=${msg}`,"_blank");
 }
 
 loadData();
