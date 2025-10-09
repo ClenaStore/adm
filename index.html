@@ -1,221 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🎟️ Painel da Rifa Solidária</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel • Rifa Solidária</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#05091b;--card:#0f172a;--accent:#00e5ff;--text:#eaf2ff;
-  --muted:#a7b3c8;--ok:#16a34a;--warn:#f59e0b;--bad:#ef4444;--line:#1e2a3f;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  background:radial-gradient(circle at top,#091235,#030611 80%);
-  color:var(--text);font-family:"Inter",system-ui;min-height:100vh;padding:12px;
-}
-header{text-align:center;margin-bottom:16px}
-header h1{
-  font-family:"Orbitron",sans-serif;color:var(--accent);
-  font-size:1.6rem;text-shadow:0 0 10px var(--accent);margin-bottom:10px;
-}
-.refresh{
-  display:block;width:100%;padding:12px;background:linear-gradient(90deg,#00e5ff,#9333ea);
-  color:#fff;border:none;border-radius:10px;font-weight:600;font-size:1rem;margin:10px 0 20px;
-  box-shadow:0 0 10px rgba(0,229,255,.4);cursor:pointer;transition:.2s;
-}
-.refresh:hover{filter:brightness(1.1)}
-.refresh:active{transform:scale(0.97)}
-
-.indicadores{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:10px;margin-bottom:20px;
-}
-.ind-card{
-  background:var(--card);border:1px solid var(--line);border-radius:10px;
-  padding:10px;text-align:center;box-shadow:0 0 10px rgba(0,0,0,.3);
-  transition:transform .2s ease;
-}
-.ind-card:hover{transform:scale(1.05)}
-.ind-card h3{font-size:1.1rem;margin-bottom:4px}
-.ind-card span{font-weight:700;font-size:1.2rem}
-.ind-ok{color:var(--ok)}
-.ind-warn{color:var(--warn)}
-.ind-bad{color:var(--bad)}
-.ind-total{color:var(--accent)}
-
-.list{display:flex;flex-direction:column;gap:14px}
-.card{
-  background:var(--card);border-radius:14px;border:1px solid var(--line);
-  box-shadow:0 0 10px rgba(0,0,0,.4);padding:12px 14px;display:flex;
-  flex-direction:column;gap:8px;position:relative;animation:fadeIn .3s ease-in-out;
-}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.card h2{font-size:1.1rem;color:var(--accent);margin-bottom:4px}
-.card .info{font-size:0.9rem;line-height:1.4;color:var(--text)}
-.status{padding:6px 10px;border-radius:6px;font-size:0.8rem;font-weight:600;text-align:center;width:fit-content}
-.RESERVADO{background:#22314a;color:var(--warn)}
-.PAGO{background:#153a2a;color:#bdfcc5}
-.CANCELADO{background:#3b1c1c;color:#ff9e9e}
-.ENTREGUE{background:#133042;color:#aee9ff}
-.chips{display:flex;flex-wrap:wrap;gap:4px}
-.chip{background:#12223b;border:1px solid #22304a;padding:4px 8px;border-radius:8px;font-size:0.8rem;color:var(--text)}
-.actions{display:flex;gap:6px;margin-top:6px}
-.btn{
-  flex:1;padding:10px;border:none;border-radius:8px;color:#fff;
-  font-weight:600;font-size:0.85rem;cursor:pointer;transition:.2s;
-}
-.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
-.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
-.bad{background:linear-gradient(90deg,#dc2626,#ef4444)}
-.cobranca{background:linear-gradient(90deg,#00e5ff,#3b82f6)}
-.whats{background:linear-gradient(90deg,#25d366,#128c7e)}
-.btn:hover{filter:brightness(1.1)}
-footer{text-align:center;color:var(--muted);font-size:0.8rem;margin-top:24px}
-
-.menu-status{
-  position:absolute;bottom:12px;right:12px;background:#102040;border:1px solid #1f2f49;
-  border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
-  color:#fff;font-weight:bold;font-size:18px;cursor:pointer;box-shadow:0 0 10px rgba(0,229,255,.3)
-}
-.menu-options{
-  position:absolute;bottom:58px;right:12px;background:#0b1222;border:1px solid #1f2f49;
-  border-radius:10px;padding:6px;display:none;flex-direction:column;gap:6px;
-}
-.menu-options button{
-  padding:8px;border:none;border-radius:6px;color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer
-}
-.menu-options button.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
-.menu-options button.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
-.menu-options button.bad{background:linear-gradient(90deg,#dc2626,#ef4444)}
+  :root{--bg:#0b1220;--card:#0f172a;--ink:#eaf2ff;--muted:#95a3be;--line:#1f2a41;--ok:#16a34a;--warn:#f59e0b;--bad:#ef4444;}
+  *{box-sizing:border-box;font-family:Inter,system-ui}
+  body{margin:0;background:radial-gradient(circle at 20% -10%,#162751,#0b1120 70%);color:var(--ink)}
+  header{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+  h1{margin:0;font-size:18px}
+  button,select{border:0;border-radius:8px}
+  .refresh{margin-left:auto;background:linear-gradient(90deg,#00e5ff,#7c3aed);padding:10px 14px;color:#fff;cursor:pointer}
+  main{padding:16px}
+  .msg{margin-bottom:10px;font-weight:600}
+  .table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
+  th,td{padding:10px;border-bottom:1px solid var(--line);font-size:14px}
+  th{background:#0c1830;text-align:left;color:#cfe3ff}
+  tr:last-child td{border-bottom:0}
+  .status{padding:4px 8px;border-radius:6px;font-weight:700;font-size:12px}
+  .S-RESERVADO{background:#22314a;color:#ffd88a}
+  .S-PAGO{background:#153a2a;color:#bdfcc5}
+  .S-CANCELADO{background:#3b1c1c;color:#ff9e9e}
+  .S-ENTREGUE{background:#133042;color:#aee9ff}
+  .row-actions{display:flex;gap:6px;align-items:center}
+  .sel{background:#0f1e3d;color:#fff;border:1px solid #1f335e;padding:6px 8px}
+  .salvar{background:var(--ok);color:#fff;padding:7px 10px;cursor:pointer}
 </style>
 </head>
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="loadData()">🔄 Atualizar Lista</button>
+  <button class="refresh" onclick="load()">🔄 Atualizar</button>
 </header>
-
-<section id="indicadores" class="indicadores"></section>
-<section id="lista" class="list">
-  <div style="text-align:center;color:var(--muted);">⏳ Carregando...</div>
-</section>
-
-<footer>© 2025 Rifa Solidária • Painel Mobile</footer>
+<main>
+  <div id="msg" class="msg"></div>
+  <div style="overflow:auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th>
+          <th>Números</th><th>Qtd</th><th>Total</th><th>Data/Hora</th>
+          <th>Status</th><th>Mudar status</th>
+        </tr>
+      </thead>
+      <tbody id="body"><tr><td colspan="10">Carregando...</td></tr></tbody>
+    </table>
+  </div>
+</main>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE9uNNrFONyUaxVV_CXwGrg4gErdiH8zXzGEyioH1KXdNxkBuHJP_sUj95L8NKNbFrQA/exec";
+  // 🔗 Cole aqui o link /exec do seu GAS
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxV6noIXFBPSaCamkpSJDeDITLErD2B_PjwPYVA0aBL36BgRpWSbVtQzA99uprmSYA8vQ/exec";
 
-async function loadData(){
-  const container=document.getElementById("lista");
-  const indic=document.getElementById("indicadores");
-  container.innerHTML="<div style='text-align:center;color:var(--muted);'>⏳ Carregando...</div>";
-  indic.innerHTML="";
-  try{
-    const res=await fetch(`${SCRIPT_URL}?action=admin`);
-    const text=await res.text();
-    let data;
-    try { data=JSON.parse(text); }
-    catch { throw new Error("Retorno inválido: "+text); }
+  let DATA = [];
 
-    if(!Array.isArray(data)){ container.innerHTML=`<div style='color:var(--bad)'>❌ Erro: ${text}</div>`; return; }
-
-    if(!data.length){
-      container.innerHTML="<div style='text-align:center;color:var(--muted);'>Nenhum registro encontrado.</div>";
-      return;
-    }
-
-    // Indicadores
-    const total=data.length;
-    const pagos=data.filter(r=>r.status==="PAGO").length;
-    const reservados=data.filter(r=>r.status==="RESERVADO").length;
-    const cancelados=data.filter(r=>r.status==="CANCELADO").length;
-    const entregues=data.filter(r=>r.status==="ENTREGUE").length;
-    indic.innerHTML=`
-      <div class="ind-card ind-total"><h3>Total</h3><span>${total}</span></div>
-      <div class="ind-card ind-ok"><h3>Pagos</h3><span>${pagos}</span></div>
-      <div class="ind-card ind-warn"><h3>Reserv.</h3><span>${reservados}</span></div>
-      <div class="ind-card ind-bad"><h3>Cancel.</h3><span>${cancelados}</span></div>
-      <div class="ind-card ind-total"><h3>Entregues</h3><span>${entregues}</span></div>
-    `;
-
-    // Cartões
-    container.innerHTML="";
-    data.forEach(r=>{
-      const div=document.createElement("div");
-      div.className="card";
-      const chips=(r.numeros||"").split(",").map(n=>n.trim()).filter(Boolean).map(n=>`<span class='chip'>${n}</span>`).join("");
-      div.innerHTML=`
-        <h2>${r.nome||"Sem nome"}</h2>
-        <div class="info">
-          <b>Telefone:</b> ${r.telefone||""}<br>
-          <b>Email:</b> ${r.email||""}<br>
-          <b>Qtd:</b> ${r.qtd||0} • <b>Total:</b> R$ ${r.total||""}<br>
-          <b>Data:</b> ${r.dataHora||""}
-        </div>
-        <div class="chips">${chips}</div>
-        <span class="status ${r.status||""}">${r.status||""}</span>
-        <div class="actions">
-          <button class="btn cobranca" onclick="enviarCobranca('${esc(r.telefone)}')">💰 Cobrança</button>
-          <button class="btn whats" onclick="abrirWhats('${esc(r.telefone)}','${esc(r.nome)}')">💬 WhatsApp</button>
-        </div>
-        <div class="menu-status" onclick="toggleMenu(this)">⚙️</div>
-        <div class="menu-options">
-          <button class="ok" onclick="atualizarStatus('${esc(r.telefone)}','PAGO')">Pago</button>
-          <button class="warn" onclick="atualizarStatus('${esc(r.telefone)}','ENTREGUE')">Entregue</button>
-          <button class="bad" onclick="atualizarStatus('${esc(r.telefone)}','CANCELADO')">Cancelar</button>
-        </div>
-      `;
-      container.appendChild(div);
-    });
-  }catch(e){
-    container.innerHTML=`<div style='color:var(--bad)'>❌ ${e.message}</div>`;
+  function toast(t, error=false){
+    const el = document.getElementById('msg');
+    el.style.color = error ? "#ff6b81" : "#7af59a";
+    el.textContent = t;
+    if(t) setTimeout(()=> el.textContent='', 3000);
   }
-}
 
-function esc(s){return String(s||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}
-
-function toggleMenu(el){
-  const menu=el.nextElementSibling;
-  menu.style.display=menu.style.display==="flex"?"none":"flex";
-}
-
-async function atualizarStatus(tel,status){
-  if(!confirm(`Confirmar alterar status para ${status}?`)) return;
-  try{
-    const res=await fetch(SCRIPT_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({action:"alterar_status",telefone:tel,status})
+  // ---- JSONP helper (Promise) ----
+  function jsonp(url){
+    return new Promise((resolve, reject)=>{
+      const cb = "cb_"+Math.random().toString(36).slice(2);
+      window[cb] = (payload)=>{ resolve(payload); cleanup(); };
+      const s = document.createElement('script');
+      s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cb;
+      s.onerror = ()=>{ reject(new Error("JSONP error")); cleanup(); };
+      document.body.appendChild(s);
+      function cleanup(){ try{delete window[cb]}catch{}; s.remove(); }
     });
-    const txt=await res.text();
-    if(txt.includes("STATUS_ATUALIZADO")){ alert("✅ Status atualizado!"); loadData(); }
-    else alert("❌ Falha: "+txt);
-  }catch(e){alert("Erro de conexão: "+e.message);}
-}
+  }
 
-async function enviarCobranca(tel){
-  if(!confirm(`Enviar cobrança para ${tel}?`)) return;
-  try{
-    const res=await fetch(SCRIPT_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({action:"enviar_cobranca",telefone:tel})
-    });
-    const txt=await res.text();
-    if(txt.includes("COBRANCA_ENVIADA")) alert("📩 Cobrança enviada!");
-    else alert("❌ Falha ao enviar: "+txt);
-  }catch(e){alert("Erro: "+e.message);}
-}
+  async function load(){
+    document.getElementById('body').innerHTML = "<tr><td colspan='10'>Carregando...</td></tr>";
+    try{
+      const rows = await jsonp(`${SCRIPT_URL}?action=list`);
+      DATA = Array.isArray(rows) ? rows : [];
+      render(DATA);
+      toast("Registros carregados");
+    }catch(e){
+      document.getElementById('body').innerHTML = "<tr><td colspan='10'>Falha ao carregar</td></tr>";
+      toast(e.message,true);
+    }
+  }
 
-function abrirWhats(tel,nome){
-  const numero=tel.replace(/\D/g,"");
-  const msg=`Olá ${nome||''}!%0AEstou entrando em contato sobre a Rifa Solidária.%0AConfira seu status ou realize o pagamento.`;
-  window.open(`https://wa.me/55${numero}?text=${msg}`,"_blank");
-}
+  function render(rows){
+    const tbody = document.getElementById('body');
+    if(!rows.length){ tbody.innerHTML = "<tr><td colspan='10'>Nenhum registro</td></tr>"; return; }
+    tbody.innerHTML = rows.map(r=>{
+      const sclass = "S-" + String(r.status||"").toUpperCase();
+      return `<tr>
+        <td>${r.rowNumber}</td>
+        <td>${esc(r.nome)}</td>
+        <td>${esc(r.telefone)}</td>
+        <td>${esc(r.email)}</td>
+        <td>${esc(r.numeros)}</td>
+        <td>${esc(r.qtd)}</td>
+        <td>${esc(r.total)}</td>
+        <td>${esc(r.dataHora)}</td>
+        <td><span class="status ${sclass}">${esc(r.status||"")}</span></td>
+        <td class="row-actions">
+          <select id="sel-${r.rowNumber}" class="sel">
+            ${opt("RESERVADO", r.status)}
+            ${opt("PAGO", r.status)}
+            ${opt("CANCELADO", r.status)}
+            ${opt("ENTREGUE", r.status)}
+          </select>
+          <button class="salvar" onclick="save(${r.rowNumber})">Salvar</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
 
-loadData();
+  function opt(v, cur){ return `<option value="${v}" ${String(cur).toUpperCase()===v?"selected":""}>${v}</option>`; }
+  function esc(s){ return String(s??"").replace(/[&<>"]/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m])); }
+
+  async function save(rowNumber){
+    const status = document.getElementById(`sel-${rowNumber}`).value;
+    try{
+      const res = await jsonp(`${SCRIPT_URL}?action=update&row=${rowNumber}&status=${encodeURIComponent(status)}`);
+      if(res && res.ok){ toast("Status atualizado"); load(); }
+      else { toast(res && res.error ? res.error : "Falha ao atualizar", true); }
+    }catch(e){ toast(e.message, true); }
+  }
+
+  load();
 </script>
 </body>
 </html>
