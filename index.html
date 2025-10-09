@@ -19,41 +19,37 @@ body{
   min-height:100vh;
   padding:12px;
 }
-header{text-align:center;margin-bottom:20px;}
+header{text-align:center;margin-bottom:15px;}
 header h1{
   font-family:'Orbitron',sans-serif;
   color:var(--accent);
   text-shadow:0 0 10px var(--accent);
-  font-size:1.8rem;margin-bottom:10px;
-}
-button{
-  cursor:pointer;
-  border:none;
-  border-radius:8px;
-  font-weight:600;
-  transition:all .2s;
+  font-size:1.6rem;margin-bottom:10px;
 }
 .refresh{
   background:linear-gradient(90deg,#00e5ff,#9333ea);
-  color:#fff;padding:10px 20px;
+  color:#fff;padding:8px 18px;
+  border:none;border-radius:8px;font-weight:600;
   box-shadow:0 0 10px rgba(0,229,255,.5);
 }
 .refresh:hover{filter:brightness(1.1)}
 .msg{text-align:center;margin:10px 0;font-weight:600;}
 .cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px;margin-bottom:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;margin-bottom:10px;
 }
 .card{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:10px;
-  padding:10px;
+  padding:8px;
   text-align:center;
-  box-shadow:0 0 10px rgba(0,0,0,.4);
+  box-shadow:0 0 10px rgba(0,0,0,.3);
 }
-.card h3{font-size:1rem;color:var(--muted)}
-.card span{font-weight:700;font-size:1.4rem}
+.card h3{font-size:0.9rem;color:var(--muted);margin-bottom:3px}
+.card span{font-weight:700;font-size:1.2rem}
+
 .table{
   width:100%;
   border-collapse:collapse;
@@ -64,7 +60,7 @@ button{
   box-shadow:0 0 10px rgba(0,0,0,.3);
 }
 th,td{
-  padding:10px;
+  padding:8px;
   border-bottom:1px solid var(--line);
   font-size:0.9rem;text-align:left;
 }
@@ -73,6 +69,7 @@ tr:hover{background:#1b2945}
 .status{
   padding:4px 8px;border-radius:6px;
   font-weight:700;font-size:0.8rem;
+  display:inline-block;
 }
 .RESERVADO{background:#312d16;color:var(--warn)}
 .PAGO{background:#102d1d;color:var(--ok)}
@@ -82,22 +79,29 @@ select{
   background:#101a30;color:#fff;
   border:1px solid var(--line);
   padding:6px;border-radius:6px;
-}
-button.salvar{
-  background:var(--ok);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:6px;
+  width:100%;
   font-size:0.85rem;
 }
-button.salvar:hover{filter:brightness(1.1)}
 footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
+
+/* Responsividade */
+@media (max-width:768px){
+  th:nth-child(1),td:nth-child(1),
+  th:nth-child(3),td:nth-child(3),
+  th:nth-child(5),td:nth-child(5),
+  th:nth-child(6),td:nth-child(6),
+  th:nth-child(7),td:nth-child(7){
+    display:none;
+  }
+  th,td{font-size:0.85rem}
+  header h1{font-size:1.3rem}
+}
 </style>
 </head>
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
+  <button class="refresh" onclick="load()">🔄 Atualizar</button>
 </header>
 
 <div id="msg" class="msg"></div>
@@ -109,7 +113,7 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
   <thead>
     <tr>
       <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Números</th>
-      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar Status</th>
+      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar</th>
     </tr>
   </thead>
   <tbody id="body">
@@ -118,7 +122,7 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 </table>
 </div>
 
-<footer>© 2025 Rifa Solidária • Painel Neon</footer>
+<footer>© 2025 Rifa Solidária • Painel Mobile</footer>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYSizHVpqN_tB-p-ufIpTj2HsE3443pCDnw4PtiydXfWp6XCZdshvNpLpvy4A01IJ2ug/exec";
@@ -128,10 +132,9 @@ function toast(msg, error=false){
   const el=document.getElementById("msg");
   el.style.color=error?"#ff6b81":"#7af59a";
   el.textContent=msg;
-  if(msg)setTimeout(()=>el.textContent="",3000);
+  if(msg)setTimeout(()=>el.textContent="",2500);
 }
 
-// --- Função JSONP ---
 function jsonp(url){
   return new Promise((resolve,reject)=>{
     const cb="cb_"+Math.random().toString(36).slice(2);
@@ -144,7 +147,6 @@ function jsonp(url){
   });
 }
 
-// --- Carregar registros ---
 async function load(){
   document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>⏳ Carregando...</td></tr>";
   try{
@@ -160,7 +162,6 @@ async function load(){
   }
 }
 
-// --- Renderizar cards de totais ---
 function renderCards(rows){
   const total=rows.length;
   const pagos=rows.filter(r=>r.status==="PAGO").length;
@@ -176,13 +177,12 @@ function renderCards(rows){
   `;
 }
 
-// --- Renderizar tabela ---
 function renderTable(rows){
   const tbody=document.getElementById("body");
   if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
   tbody.innerHTML=rows.map(r=>{
     const sClass=r.status?` ${r.status}`:"";
-    return `<tr>
+    return `<tr id="r${r.rowNumber}">
       <td>${r.rowNumber}</td>
       <td>${esc(r.nome)}</td>
       <td>${esc(r.telefone)}</td>
@@ -193,29 +193,32 @@ function renderTable(rows){
       <td>${esc(r.dataHora)}</td>
       <td><span class="status${sClass}">${esc(r.status)}</span></td>
       <td>
-        <select id="sel-${r.rowNumber}">
+        <select id="sel-${r.rowNumber}" onchange="update(${r.rowNumber}, this.value)">
           ${opt("RESERVADO",r.status)}
           ${opt("PAGO",r.status)}
           ${opt("CANCELADO",r.status)}
           ${opt("ENTREGUE",r.status)}
         </select>
-        <button class="salvar" onclick="update(${r.rowNumber})">Salvar</button>
       </td>
     </tr>`;
   }).join("");
 }
 
-// --- Utilidades ---
 function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
 function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
 
-// --- Atualizar status ---
-async function update(row){
-  const status=document.getElementById(`sel-${row}`).value;
+async function update(row,status){
+  const elRow=document.getElementById(`r${row}`);
   try{
     const res=await jsonp(`${SCRIPT_URL}?action=update&row=${row}&status=${encodeURIComponent(status)}`);
-    if(res.ok){toast("✅ Status atualizado!");load();}
-    else toast("❌ Erro: "+(res.error||"Falha"),true);
+    if(res.ok){
+      const statusEl=elRow.querySelector(".status");
+      statusEl.className="status "+status;
+      statusEl.textContent=status;
+      toast("✅ Status atualizado");
+    } else {
+      toast("❌ Falha: "+(res.error||"Erro"),true);
+    }
   }catch(e){toast(e.message,true);}
 }
 
