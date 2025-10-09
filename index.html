@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,20 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#05091b;
-  --card:#0f172a;
-  --line:#1f2f49;
-  --ink:#eaf2ff;
-  --muted:#94a3b8;
-  --accent:#00e5ff;
-  --ok:#16a34a;
-  --warn:#f59e0b;
-  --bad:#ef4444;
-  --info:#3b82f6;
+  --bg:#05091b;--card:#0f172a;--line:#1f2f49;
+  --ink:#eaf2ff;--muted:#94a3b8;
+  --accent:#00e5ff;--ok:#16a34a;--warn:#f59e0b;
+  --bad:#ef4444;--info:#3b82f6;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui}
 body{
-  background:radial-gradient(circle at top,#0c1630,#020510 80%);
+  background:radial-gradient(circle at top,#0b132c,#020510 80%);
   color:var(--ink);
   min-height:100vh;
   padding:12px;
@@ -30,60 +23,72 @@ header{text-align:center;margin-bottom:20px;}
 header h1{
   font-family:'Orbitron',sans-serif;
   color:var(--accent);
-  text-shadow:0 0 8px var(--accent);
-  font-size:1.7rem;
-  margin-bottom:10px;
+  text-shadow:0 0 10px var(--accent);
+  font-size:1.8rem;margin-bottom:10px;
+}
+button{
+  cursor:pointer;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  transition:all .2s;
 }
 .refresh{
   background:linear-gradient(90deg,#00e5ff,#9333ea);
-  color:#fff;border:none;border-radius:8px;
-  padding:10px 20px;font-weight:600;
-  font-size:1rem;cursor:pointer;
+  color:#fff;padding:10px 20px;
   box-shadow:0 0 10px rgba(0,229,255,.5);
-  transition:.2s;
 }
 .refresh:hover{filter:brightness(1.1)}
-.refresh:active{transform:scale(.98)}
 .msg{text-align:center;margin:10px 0;font-weight:600;}
 .cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:10px;margin-bottom:20px;
 }
 .card{
-  background:var(--card);border:1px solid var(--line);
-  border-radius:10px;padding:10px;text-align:center;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
   box-shadow:0 0 10px rgba(0,0,0,.4);
 }
-.card h3{font-size:1rem;margin-bottom:5px;color:var(--muted)}
+.card h3{font-size:1rem;color:var(--muted)}
 .card span{font-weight:700;font-size:1.4rem}
 .table{
   width:100%;
   border-collapse:collapse;
   background:var(--card);
   border:1px solid var(--line);
-  box-shadow:0 0 10px rgba(0,0,0,.3);
   border-radius:10px;
   overflow:hidden;
+  box-shadow:0 0 10px rgba(0,0,0,.3);
 }
-th,td{padding:10px;border-bottom:1px solid var(--line);font-size:0.9rem;text-align:left}
+th,td{
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  font-size:0.9rem;text-align:left;
+}
 th{background:#13213b;color:#cdd9f0}
-tr:hover{background:#182745}
+tr:hover{background:#1b2945}
 .status{
-  padding:4px 8px;border-radius:6px;font-weight:700;font-size:0.8rem;
+  padding:4px 8px;border-radius:6px;
+  font-weight:700;font-size:0.8rem;
 }
 .RESERVADO{background:#312d16;color:var(--warn)}
 .PAGO{background:#102d1d;color:var(--ok)}
 .CANCELADO{background:#3b1c1c;color:var(--bad)}
 .ENTREGUE{background:#132d40;color:var(--info)}
 select{
-  background:#101a30;color:#fff;border:1px solid var(--line);
+  background:#101a30;color:#fff;
+  border:1px solid var(--line);
   padding:6px;border-radius:6px;
 }
 button.salvar{
-  background:var(--ok);color:#fff;border:none;
-  border-radius:6px;padding:6px 10px;cursor:pointer;
-  font-weight:600;transition:.2s;
+  background:var(--ok);
+  color:#fff;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:0.85rem;
 }
 button.salvar:hover{filter:brightness(1.1)}
 footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
@@ -92,19 +97,19 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="carregar()">🔄 Atualizar Lista</button>
+  <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
 </header>
 
 <div id="msg" class="msg"></div>
 
-<section class="cards" id="cards"></section>
+<section id="cards" class="cards"></section>
 
-<div style="overflow-x:auto">
+<div style="overflow-x:auto;">
 <table class="table">
   <thead>
     <tr>
       <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Números</th>
-      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar status</th>
+      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar Status</th>
     </tr>
   </thead>
   <tbody id="body">
@@ -116,17 +121,17 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 <footer>© 2025 Rifa Solidária • Painel Neon</footer>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrxCitW1FvNQAu4sEjDJUL6-QH-10quDnrUmIY-8JSd277xL3LjGNSGi5HxEZsY7LONw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKNzgdYpuS8HlPemA9oBogkbLzMSClMO4Dkp9mrtUkfa25tDw971G_lE94hyKO6wQOtg/exec";
 let DATA = [];
 
-function toast(msg, isError=false){
+function toast(msg, error=false){
   const el=document.getElementById("msg");
-  el.style.color=isError?"#ff6b81":"#7af59a";
+  el.style.color=error?"#ff6b81":"#7af59a";
   el.textContent=msg;
   if(msg)setTimeout(()=>el.textContent="",3000);
 }
 
-// --- Chamada JSONP nativa ---
+// --- Função JSONP ---
 function jsonp(url){
   return new Promise((resolve,reject)=>{
     const cb="cb_"+Math.random().toString(36).slice(2);
@@ -139,8 +144,8 @@ function jsonp(url){
   });
 }
 
-// --- Carrega dados do GAS ---
-async function carregar(){
+// --- Carregar registros ---
+async function load(){
   document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>⏳ Carregando...</td></tr>";
   try{
     const dados=await jsonp(`${SCRIPT_URL}?action=list`);
@@ -155,7 +160,7 @@ async function carregar(){
   }
 }
 
-// --- Mostra os cartões de totais ---
+// --- Renderizar cards de totais ---
 function renderCards(rows){
   const total=rows.length;
   const pagos=rows.filter(r=>r.status==="PAGO").length;
@@ -171,7 +176,7 @@ function renderCards(rows){
   `;
 }
 
-// --- Mostra a tabela ---
+// --- Renderizar tabela ---
 function renderTable(rows){
   const tbody=document.getElementById("body");
   if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
@@ -194,26 +199,27 @@ function renderTable(rows){
           ${opt("CANCELADO",r.status)}
           ${opt("ENTREGUE",r.status)}
         </select>
-        <button class="salvar" onclick="salvar(${r.rowNumber})">Salvar</button>
+        <button class="salvar" onclick="update(${r.rowNumber})">Salvar</button>
       </td>
     </tr>`;
   }).join("");
 }
 
+// --- Utilidades ---
 function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
 function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
 
-// --- Salva status atualizado ---
-async function salvar(row){
+// --- Atualizar status ---
+async function update(row){
   const status=document.getElementById(`sel-${row}`).value;
   try{
     const res=await jsonp(`${SCRIPT_URL}?action=update&row=${row}&status=${encodeURIComponent(status)}`);
-    if(res.ok){toast("✅ Status atualizado!");carregar();}
+    if(res.ok){toast("✅ Status atualizado!");load();}
     else toast("❌ Erro: "+(res.error||"Falha"),true);
   }catch(e){toast(e.message,true);}
 }
 
-carregar();
+load();
 </script>
 </body>
 </html>
