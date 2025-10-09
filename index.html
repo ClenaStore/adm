@@ -3,153 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Painel Administrativo - Rifa Solidária</title>
+<title>🎟️ Rifa Solidária - Painel</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#060818;--card:#0f172a;--text:#eaf2ff;--muted:#a7b3c8;
-  --line:#1e2a3f;--accent:#00e5ff;--warn:#f59e0b;--ok:#16a34a;--bad:#ef4444;
+:root {
+  --bg: #05091b;
+  --card: #0f172a;
+  --accent: #00e5ff;
+  --text: #eaf2ff;
+  --muted: #a7b3c8;
+  --ok: #16a34a;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --line: #1e2a3f;
 }
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(900px 600px at 50% -100px,#0a0f2c,#020412 80%);font-family:Inter;color:var(--text)}
-h1{font-family:Orbitron;text-align:center;color:var(--warn);text-shadow:0 0 10px rgba(245,158,11,.6);margin:16px 8px}
-.toolbar{display:flex;gap:8px;justify-content:center;margin:8px 12px 14px}
-.refresh{background:linear-gradient(90deg,#00e5ff,#9333ea);color:#111;font-weight:700;padding:10px 18px;border:none;border-radius:10px;cursor:pointer;box-shadow:0 0 12px rgba(0,229,255,.4)}
-.refresh:hover{filter:brightness(1.06)}
-.table-wrap{max-width:1000px;margin:0 auto 34px;background:var(--card);border-radius:12px;box-shadow:0 0 15px rgba(0,229,255,.08);padding:12px;border:1px solid var(--line);overflow-x:auto}
+* {box-sizing: border-box; margin: 0; padding: 0;}
+body {
+  background: radial-gradient(circle at top, #091235, #030611 80%);
+  color: var(--text);
+  font-family: "Inter", system-ui;
+  min-height: 100vh;
+  padding: 12px;
+}
+header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+header h1 {
+  font-family: "Orbitron", sans-serif;
+  color: var(--accent);
+  font-size: 1.4rem;
+  text-shadow: 0 0 10px var(--accent);
+}
+.refresh {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #00e5ff, #9333ea);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 10px 0 16px;
+  box-shadow: 0 0 10px rgba(0, 229, 255, .4);
+}
+.refresh:active {transform: scale(0.97);}
 
-/* tabela (desktop) */
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{border-bottom:1px solid #22304a;padding:10px 12px;text-align:left;vertical-align:top}
-th{color:var(--accent);text-transform:uppercase;font-size:12px;letter-spacing:.5px}
-tr:hover{background:#0b1325}
-.status{padding:4px 8px;border-radius:6px;font-size:12px;text-align:center;display:inline-block}
-.RESERVADO{background:#22314a;color:var(--warn)}
-.PAGO{background:#153a2a;color:#bdfcc5}
-.CANCELADO{background:#3b1c1c;color:#ff9e9e}
-.ENTREGUE{background:#133042;color:#aee9ff}
-.btn{border:none;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer;margin:2px;font-size:12px;transition:.2s}
-.btn:hover{filter:brightness(1.1)}
-.ok{background:linear-gradient(90deg,#16a34a,#22c55e);color:#fff}
-.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
-.bad{background:linear-gradient(90deg,#dc2626,#ef4444);color:#fff}
-footer{text-align:center;font-size:12px;color:var(--muted);margin:14px}
+/* cards de venda */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 10px rgba(0,0,0,.4);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card h2 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.card .info {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+.status {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  width: fit-content;
+}
+.RESERVADO {background: #22314a; color: var(--warn);}
+.PAGO {background: #153a2a; color: #bdfcc5;}
+.CANCELADO {background: #3b1c1c; color: #ff9e9e;}
+.ENTREGUE {background: #133042; color: #aee9ff;}
 
-/* chips para números */
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{display:inline-block;background:#12223b;border:1px solid #22304a;color:#eaf2ff;border-radius:8px;padding:4px 6px;font-size:12px}
+/* chips dos números */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.chip {
+  background: #12223b;
+  border: 1px solid #22304a;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--text);
+}
 
-/* --------- MOBILE: tabela vira cards --------- */
-@media(max-width:760px){
-  .table-wrap{padding:10px;border-radius:10px}
-  table{border:0}
-  thead{display:none}
-  tbody, tr, td{display:block;width:100%}
-  tr{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:8px 10px;
-    margin:10px 0;
-    box-shadow:0 8px 18px rgba(0,0,0,.25);
-  }
-  td{
-    border-bottom:1px dashed #22304a;
-    padding:8px 6px 10px;
-  }
-  td:last-child{border-bottom:0;padding-bottom:4px}
-  td::before{
-    content:attr(data-label);
-    display:block;
-    color:var(--muted);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.4px;
-    margin-bottom:3px;
-  }
-  /* ações em grid para toque fácil */
-  td[data-label="Ações"]{display:flex;gap:8px;flex-wrap:wrap}
-  td[data-label="Ações"] .btn{flex:1;min-width:30%;}
-  /* quebras */
-  td[data-label="Email"], td[data-label="Números"]{word-break:break-word}
-  .chips{gap:4px}
-  .chip{padding:4px 6px;font-size:12px}
-  .refresh{padding:10px 14px}
+/* botões de ação */
+.actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.ok {background: linear-gradient(90deg,#16a34a,#22c55e);}
+.warn {background: linear-gradient(90deg,#f59e0b,#facc15); color:#111;}
+.bad {background: linear-gradient(90deg,#dc2626,#ef4444);}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 24px;
 }
 </style>
 </head>
 <body>
 
-<h1>🎟️ Painel da Rifa Solidária</h1>
-<div class="toolbar">
+<header>
+  <h1>🎟️ Painel da Rifa Solidária</h1>
   <button class="refresh" onclick="loadData()">🔄 Atualizar Lista</button>
-</div>
+</header>
 
-<div class="table-wrap">
-  <table id="tabela">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Telefone</th>
-        <th>Email</th>
-        <th>Números</th>
-        <th>Qtd</th>
-        <th>Total (R$)</th>
-        <th>Data</th>
-        <th>Status</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+<section id="lista" class="list">
+  <div style="text-align:center;color:var(--muted);">⏳ Carregando...</div>
+</section>
 
-<footer>© 2025 Rifa Solidária • Painel Administrativo</footer>
+<footer>© 2025 Rifa Solidária • Painel Mobile</footer>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7Bq_OXa2pgNSuVD6o7KJJQsLIbZo4jhBpKTsWA5TOBSuAVO6o2B1P3Ga-BI57SHlteQ/exec"; // sua URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7Bq_OXa2pgNSuVD6o7KJJQsLIbZo4jhBpKTsWA5TOBSuAVO6o2B1P3Ga-BI57SHlteQ/exec";
 
 async function loadData(){
-  const tbody=document.querySelector("#tabela tbody");
-  tbody.innerHTML="<tr><td data-label='Carregando' colspan='9'>⏳ Carregando...</td></tr>";
+  const container=document.getElementById("lista");
+  container.innerHTML="<div style='text-align:center;color:var(--muted);'>⏳ Carregando...</div>";
   try{
     const res=await fetch(`${SCRIPT_URL}?action=admin`);
     const data=await res.json();
-    tbody.innerHTML="";
+    container.innerHTML="";
     if(!data.length){
-      tbody.innerHTML="<tr><td data-label='Vazio' colspan='9'>Nenhum registro encontrado.</td></tr>";
+      container.innerHTML="<div style='text-align:center;color:var(--muted);'>Nenhum registro encontrado.</div>";
       return;
     }
 
     data.forEach(r=>{
-      const tr=document.createElement("tr");
-
-      // gera chips bonitos para números
-      const chips = (r.numeros||"")
+      const div=document.createElement("div");
+      div.className="card";
+      const chips=(r.numeros||"")
         .split(",")
         .map(n=>n.trim())
         .filter(Boolean)
-        .map(n=>`<span class="chip">${n}</span>`)
+        .map(n=>`<span class='chip'>${n}</span>`)
         .join("");
-
-      tr.innerHTML=`
-        <td data-label="Nome">${r.nome||""}</td>
-        <td data-label="Telefone">${r.telefone||""}</td>
-        <td data-label="Email">${r.email||""}</td>
-        <td data-label="Números"><div class="chips">${chips||""}</div></td>
-        <td data-label="Qtd">${r.qtd||0}</td>
-        <td data-label="Total (R$)">${r.total||""}</td>
-        <td data-label="Data">${r.data||""}</td>
-        <td data-label="Status"><span class="status ${r.status||""}">${r.status||""}</span></td>
-        <td data-label="Ações">
-          <button class="btn ok"   onclick="atualizarStatus('${esc(r.telefone)}','PAGO')">Pago</button>
+      div.innerHTML=`
+        <h2>${r.nome||"Sem nome"}</h2>
+        <div class="info">
+          <b>Telefone:</b> ${r.telefone||""}<br>
+          <b>Email:</b> ${r.email||""}<br>
+          <b>Qtd:</b> ${r.qtd||0} • <b>Total:</b> R$ ${r.total||""}<br>
+          <b>Data:</b> ${r.data||""}
+        </div>
+        <div class="chips">${chips}</div>
+        <span class="status ${r.status||""}">${r.status||""}</span>
+        <div class="actions">
+          <button class="btn ok" onclick="atualizarStatus('${esc(r.telefone)}','PAGO')">Pago</button>
           <button class="btn warn" onclick="atualizarStatus('${esc(r.telefone)}','ENTREGUE')">Entregue</button>
-          <button class="btn bad"  onclick="atualizarStatus('${esc(r.telefone)}','CANCELADO')">Cancelar</button>
-        </td>`;
-      tbody.appendChild(tr);
+          <button class="btn bad" onclick="atualizarStatus('${esc(r.telefone)}','CANCELADO')">Cancelar</button>
+        </div>
+      `;
+      container.appendChild(div);
     });
   }catch(e){
-    tbody.innerHTML="<tr><td data-label='Erro' colspan='9'>Erro ao carregar.</td></tr>";
+    container.innerHTML="<div style='text-align:center;color:var(--bad);'>❌ Erro ao carregar.</div>";
   }
 }
 
