@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>🎟️ Painel da Rifa Solidária</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
@@ -19,17 +19,19 @@ body{
   min-height:100vh;
   padding:12px;
 }
-header{text-align:center;margin-bottom:15px;}
+header{text-align:center;margin-bottom:16px;}
 header h1{
   font-family:'Orbitron',sans-serif;
   color:var(--accent);
   text-shadow:0 0 10px var(--accent);
   font-size:1.6rem;margin-bottom:10px;
 }
+button{
+  cursor:pointer;border:none;border-radius:8px;font-weight:600;transition:.2s;
+}
 .refresh{
   background:linear-gradient(90deg,#00e5ff,#9333ea);
   color:#fff;padding:8px 18px;
-  border:none;border-radius:8px;font-weight:600;
   box-shadow:0 0 10px rgba(0,229,255,.5);
 }
 .refresh:hover{filter:brightness(1.1)}
@@ -37,90 +39,90 @@ header h1{
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:10px;margin-bottom:10px;
+  gap:10px;margin-bottom:16px;
 }
 .card{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:10px;
-  padding:8px;
+  padding:10px;
   text-align:center;
   box-shadow:0 0 10px rgba(0,0,0,.3);
 }
-.card h3{font-size:0.9rem;color:var(--muted);margin-bottom:3px}
-.card span{font-weight:700;font-size:1.2rem}
-
-.table{
-  width:100%;
-  border-collapse:collapse;
+.card h3{font-size:1rem;color:var(--muted)}
+.card span{font-weight:700;font-size:1.3rem}
+.list{display:flex;flex-direction:column;gap:12px;}
+.item{
   background:var(--card);
   border:1px solid var(--line);
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 0 10px rgba(0,0,0,.3);
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,.4);
+  padding:14px;
+  position:relative;
+  animation:fadeIn .3s ease-in-out;
 }
-th,td{
-  padding:8px;
-  border-bottom:1px solid var(--line);
-  font-size:0.9rem;text-align:left;
-}
-th{background:#13213b;color:#cdd9f0}
-tr:hover{background:#1b2945}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.nome{font-size:1rem;font-weight:600;color:var(--accent)}
+.numeros{font-size:.9rem;color:var(--muted);margin-top:3px}
+.valor{font-size:1rem;font-weight:700;color:#7af59a;margin-top:6px}
 .status{
   padding:4px 8px;border-radius:6px;
   font-weight:700;font-size:0.8rem;
-  display:inline-block;
+  text-transform:uppercase;display:inline-block;margin-top:8px;
 }
 .RESERVADO{background:#312d16;color:var(--warn)}
 .PAGO{background:#102d1d;color:var(--ok)}
 .CANCELADO{background:#3b1c1c;color:var(--bad)}
 .ENTREGUE{background:#132d40;color:var(--info)}
-select{
-  background:#101a30;color:#fff;
-  border:1px solid var(--line);
-  padding:6px;border-radius:6px;
-  width:100%;
-  font-size:0.85rem;
-}
-footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 
-/* Responsividade */
-@media (max-width:768px){
-  th:nth-child(1),td:nth-child(1),
-  th:nth-child(3),td:nth-child(3),
-  th:nth-child(5),td:nth-child(5),
-  th:nth-child(6),td:nth-child(6),
-  th:nth-child(7),td:nth-child(7){
-    display:none;
-  }
-  th,td{font-size:0.85rem}
+.btn-whats{
+  background:linear-gradient(90deg,#25D366,#128C7E);
+  color:#fff;font-weight:600;
+  border-radius:8px;padding:8px 10px;
+  display:flex;align-items:center;gap:5px;
+  font-size:.9rem;justify-content:center;
+  margin-top:10px;
+}
+.btn-whats:hover{filter:brightness(1.1)}
+
+.menu-status{
+  position:absolute;bottom:12px;right:12px;
+  background:#102040;border:1px solid #1f2f49;
+  border-radius:50%;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:bold;font-size:18px;
+  cursor:pointer;box-shadow:0 0 10px rgba(0,229,255,.3);
+}
+.menu-options{
+  position:absolute;bottom:60px;right:12px;
+  background:#0b1222;border:1px solid #1f2f49;
+  border-radius:10px;padding:6px;
+  display:none;flex-direction:column;gap:6px;
+}
+.menu-options button{
+  padding:8px;border:none;border-radius:6px;
+  color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer;
+}
+.menu-options button.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.menu-options button.warn{background:linear-gradient(90deg,#f59e0b,#facc15);color:#111}
+.menu-options button.bad{background:linear-gradient(90deg,#dc2626,#ef4444)}
+footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
+@media (max-width:600px){
+  .item{padding:12px;}
   header h1{font-size:1.3rem}
+  .card span{font-size:1.1rem}
 }
 </style>
 </head>
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="load()">🔄 Atualizar</button>
+  <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
 </header>
 
 <div id="msg" class="msg"></div>
-
 <section id="cards" class="cards"></section>
-
-<div style="overflow-x:auto;">
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Números</th>
-      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar</th>
-    </tr>
-  </thead>
-  <tbody id="body">
-    <tr><td colspan="10" style="text-align:center;">⏳ Carregando...</td></tr>
-  </tbody>
-</table>
-</div>
+<section id="lista" class="list"><div style="text-align:center;">⏳ Carregando...</div></section>
 
 <footer>© 2025 Rifa Solidária • Painel Mobile</footer>
 
@@ -148,17 +150,17 @@ function jsonp(url){
 }
 
 async function load(){
-  document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>⏳ Carregando...</td></tr>";
+  document.getElementById("lista").innerHTML="<div style='text-align:center;'>⏳ Carregando...</div>";
   try{
     const dados=await jsonp(`${SCRIPT_URL}?action=list`);
     if(!Array.isArray(dados)) throw new Error("Formato inválido");
     DATA=dados;
     renderCards(dados);
-    renderTable(dados);
-    toast("✅ Dados atualizados");
+    renderList(dados);
+    toast("✅ Atualizado");
   }catch(e){
     toast(e.message,true);
-    document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>❌ Erro ao carregar</td></tr>";
+    document.getElementById("lista").innerHTML="<div style='text-align:center;'>❌ Erro ao carregar</div>";
   }
 }
 
@@ -173,54 +175,58 @@ function renderCards(rows){
     <div class="card"><h3>Pagos</h3><span style="color:var(--ok)">${pagos}</span></div>
     <div class="card"><h3>Reservados</h3><span style="color:var(--warn)">${reserv}</span></div>
     <div class="card"><h3>Cancelados</h3><span style="color:var(--bad)">${cancel}</span></div>
-    <div class="card"><h3>Entregues</h3><span style="color:var(--info)">${entreg}</span></div>
-  `;
+    <div class="card"><h3>Entregues</h3><span style="color:var(--info)">${entreg}</span></div>`;
 }
 
-function renderTable(rows){
-  const tbody=document.getElementById("body");
-  if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
-  tbody.innerHTML=rows.map(r=>{
+function renderList(rows){
+  const list=document.getElementById("lista");
+  if(!rows.length){list.innerHTML="<div style='text-align:center;'>Nenhum registro</div>";return;}
+  list.innerHTML=rows.map(r=>{
     const sClass=r.status?` ${r.status}`:"";
-    return `<tr id="r${r.rowNumber}">
-      <td>${r.rowNumber}</td>
-      <td>${esc(r.nome)}</td>
-      <td>${esc(r.telefone)}</td>
-      <td>${esc(r.email)}</td>
-      <td>${esc(r.numeros)}</td>
-      <td>${esc(r.qtd)}</td>
-      <td>${esc(r.total)}</td>
-      <td>${esc(r.dataHora)}</td>
-      <td><span class="status${sClass}">${esc(r.status)}</span></td>
-      <td>
-        <select id="sel-${r.rowNumber}" onchange="update(${r.rowNumber}, this.value)">
-          ${opt("RESERVADO",r.status)}
-          ${opt("PAGO",r.status)}
-          ${opt("CANCELADO",r.status)}
-          ${opt("ENTREGUE",r.status)}
-        </select>
-      </td>
-    </tr>`;
+    const nome=esc(r.nome);
+    const nums=esc(r.numeros);
+    const valor=esc(r.total);
+    const msg=`Olá ${nome}, segue o resumo da sua participação na Rifa Solidária:%0A🎟️ Números: ${nums}%0A💰 Valor: R$ ${valor}%0AObrigado e boa sorte! 🍀`;
+    const tel=formatarTelefone(r.telefone);
+    const linkWhats=`https://wa.me/${tel}?text=${msg}`;
+    return `
+    <div class="item" id="r${r.rowNumber}">
+      <div class="nome">${nome}</div>
+      <div class="numeros">🎟️ ${nums}</div>
+      <div class="valor">💰 R$ ${valor}</div>
+      <span class="status${sClass}">${esc(r.status)}</span>
+      <a class="btn-whats" href="${linkWhats}" target="_blank">💬 WhatsApp</a>
+      <div class="menu-status" onclick="toggleMenu(this)">⚙️</div>
+      <div class="menu-options">
+        <button class="ok" onclick="atualizarStatus(${r.rowNumber},'PAGO')">Pago</button>
+        <button class="warn" onclick="atualizarStatus(${r.rowNumber},'ENTREGUE')">Entregue</button>
+        <button class="bad" onclick="atualizarStatus(${r.rowNumber},'CANCELADO')">Cancelar</button>
+      </div>
+    </div>`;
   }).join("");
 }
 
-function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
-function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
+function toggleMenu(el){
+  const menu=el.nextElementSibling;
+  menu.style.display=menu.style.display==="flex"?"none":"flex";
+}
 
-async function update(row,status){
-  const elRow=document.getElementById(`r${row}`);
+async function atualizarStatus(row,status){
+  const card=document.getElementById(`r${row}`);
   try{
     const res=await jsonp(`${SCRIPT_URL}?action=update&row=${row}&status=${encodeURIComponent(status)}`);
     if(res.ok){
-      const statusEl=elRow.querySelector(".status");
-      statusEl.className="status "+status;
-      statusEl.textContent=status;
-      toast("✅ Status atualizado");
-    } else {
-      toast("❌ Falha: "+(res.error||"Erro"),true);
-    }
+      const span=card.querySelector(".status");
+      span.className="status "+status;
+      span.textContent=status;
+      card.querySelector(".menu-options").style.display="none";
+      toast("✅ Atualizado");
+    } else toast("❌ Falha: "+(res.error||"Erro"),true);
   }catch(e){toast(e.message,true);}
 }
+
+function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
+function formatarTelefone(tel){return tel.replace(/\D/g,'').replace(/^0+/,'').replace(/^55/,'55');}
 
 load();
 </script>
