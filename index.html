@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎟️ Painel da Rifa Solidária</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
-:root {
+:root{
   --bg:#05091b;
   --card:#0f172a;
   --line:#1f2f49;
@@ -35,30 +36,23 @@ header h1{
 }
 .refresh{
   background:linear-gradient(90deg,#00e5ff,#9333ea);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  padding:10px 20px;
-  font-weight:600;
-  font-size:1rem;
-  cursor:pointer;
+  color:#fff;border:none;border-radius:8px;
+  padding:10px 20px;font-weight:600;
+  font-size:1rem;cursor:pointer;
   box-shadow:0 0 10px rgba(0,229,255,.5);
   transition:.2s;
 }
 .refresh:hover{filter:brightness(1.1)}
 .refresh:active{transform:scale(.98)}
+.msg{text-align:center;margin:10px 0;font-weight:600;}
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:20px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;margin-bottom:20px;
 }
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px;
-  text-align:center;
+  background:var(--card);border:1px solid var(--line);
+  border-radius:10px;padding:10px;text-align:center;
   box-shadow:0 0 10px rgba(0,0,0,.4);
 }
 .card h3{font-size:1rem;margin-bottom:5px;color:var(--muted)}
@@ -83,34 +77,28 @@ tr:hover{background:#182745}
 .CANCELADO{background:#3b1c1c;color:var(--bad)}
 .ENTREGUE{background:#132d40;color:var(--info)}
 select{
-  background:#101a30;
-  color:#fff;
-  border:1px solid var(--line);
-  padding:6px;
-  border-radius:6px;
+  background:#101a30;color:#fff;border:1px solid var(--line);
+  padding:6px;border-radius:6px;
 }
 button.salvar{
-  background:var(--ok);
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-weight:600;
-  transition:.2s;
+  background:var(--ok);color:#fff;border:none;
+  border-radius:6px;padding:6px 10px;cursor:pointer;
+  font-weight:600;transition:.2s;
 }
 button.salvar:hover{filter:brightness(1.1)}
-.msg{text-align:center;margin-bottom:10px;font-weight:600;}
 footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 </style>
 </head>
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
+  <button class="refresh" onclick="carregar()">🔄 Atualizar Lista</button>
 </header>
+
 <div id="msg" class="msg"></div>
+
 <section class="cards" id="cards"></section>
+
 <div style="overflow-x:auto">
 <table class="table">
   <thead>
@@ -120,46 +108,54 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
     </tr>
   </thead>
   <tbody id="body">
-    <tr><td colspan="10">⏳ Carregando...</td></tr>
+    <tr><td colspan="10" style="text-align:center;">⏳ Carregando...</td></tr>
   </tbody>
 </table>
 </div>
+
 <footer>© 2025 Rifa Solidária • Painel Neon</footer>
+
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoItMVmS_qKTGe5z1PhYAvrPKBFGrfzyCmuRZfqQUNULzC163YJAnHIx1aTZlH9wsmHg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxO1TV5OUya0NlRaETR53VPmYG_ayHRi5KLpNiFUGkBn3J02uIFUKJuHnhRL-J0zyjoCQ/exec";
 let DATA = [];
 
-function toast(msg, error=false){
+function toast(msg, isError=false){
   const el=document.getElementById("msg");
-  el.style.color=error?"#ff6b81":"#7af59a";
+  el.style.color=isError?"#ff6b81":"#7af59a";
   el.textContent=msg;
   if(msg)setTimeout(()=>el.textContent="",3000);
 }
+
+// --- Chamada JSONP nativa ---
 function jsonp(url){
   return new Promise((resolve,reject)=>{
     const cb="cb_"+Math.random().toString(36).slice(2);
     window[cb]=(payload)=>{resolve(payload);cleanup();};
     const s=document.createElement("script");
     s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
-    s.onerror=()=>{reject(new Error("JSONP error"));cleanup();};
+    s.onerror=()=>{reject(new Error("Erro JSONP"));cleanup();};
     document.body.appendChild(s);
     function cleanup(){try{delete window[cb]}catch{};s.remove();}
   });
 }
-async function load(){
-  document.getElementById("body").innerHTML="<tr><td colspan='10'>⏳ Carregando...</td></tr>";
+
+// --- Carrega dados do GAS ---
+async function carregar(){
+  document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>⏳ Carregando...</td></tr>";
   try{
-    const rows=await jsonp(`${SCRIPT_URL}?action=list`);
-    if(!Array.isArray(rows)) throw new Error("Formato inválido");
-    DATA=rows;
-    renderCards(rows);
-    renderTable(rows);
+    const dados=await jsonp(`${SCRIPT_URL}?action=list`);
+    if(!Array.isArray(dados)) throw new Error("Formato inválido");
+    DATA=dados;
+    renderCards(dados);
+    renderTable(dados);
     toast("✅ Dados atualizados");
   }catch(e){
     toast(e.message,true);
-    document.getElementById("body").innerHTML="<tr><td colspan='10'>Erro ao carregar</td></tr>";
+    document.getElementById("body").innerHTML="<tr><td colspan='10' style='text-align:center;'>❌ Erro ao carregar</td></tr>";
   }
 }
+
+// --- Mostra os cartões de totais ---
 function renderCards(rows){
   const total=rows.length;
   const pagos=rows.filter(r=>r.status==="PAGO").length;
@@ -174,6 +170,8 @@ function renderCards(rows){
     <div class="card"><h3>Entregues</h3><span style="color:var(--info)">${entreg}</span></div>
   `;
 }
+
+// --- Mostra a tabela ---
 function renderTable(rows){
   const tbody=document.getElementById("body");
   if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
@@ -196,22 +194,26 @@ function renderTable(rows){
           ${opt("CANCELADO",r.status)}
           ${opt("ENTREGUE",r.status)}
         </select>
-        <button class="salvar" onclick="save(${r.rowNumber})">Salvar</button>
+        <button class="salvar" onclick="salvar(${r.rowNumber})">Salvar</button>
       </td>
     </tr>`;
   }).join("");
 }
+
 function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
 function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
-async function save(row){
+
+// --- Salva status atualizado ---
+async function salvar(row){
   const status=document.getElementById(`sel-${row}`).value;
   try{
     const res=await jsonp(`${SCRIPT_URL}?action=update&row=${row}&status=${encodeURIComponent(status)}`);
-    if(res.ok){toast("✅ Status atualizado");load();}
-    else toast("Erro: "+(res.error||"Falha"),true);
+    if(res.ok){toast("✅ Status atualizado!");carregar();}
+    else toast("❌ Erro: "+(res.error||"Falha"),true);
   }catch(e){toast(e.message,true);}
 }
-load();
+
+carregar();
 </script>
 </body>
 </html>
