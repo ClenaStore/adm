@@ -25,10 +25,7 @@ body{
   min-height:100vh;
   padding:12px;
 }
-header{
-  text-align:center;
-  margin-bottom:20px;
-}
+header{text-align:center;margin-bottom:20px;}
 header h1{
   font-family:'Orbitron',sans-serif;
   color:var(--accent);
@@ -50,7 +47,6 @@ header h1{
 }
 .refresh:hover{filter:brightness(1.1)}
 .refresh:active{transform:scale(.98)}
-
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
@@ -67,7 +63,6 @@ header h1{
 }
 .card h3{font-size:1rem;margin-bottom:5px;color:var(--muted)}
 .card span{font-weight:700;font-size:1.4rem}
-
 .table{
   width:100%;
   border-collapse:collapse;
@@ -87,7 +82,6 @@ tr:hover{background:#182745}
 .PAGO{background:#102d1d;color:var(--ok)}
 .CANCELADO{background:#3b1c1c;color:var(--bad)}
 .ENTREGUE{background:#132d40;color:var(--info)}
-
 select{
   background:#101a30;
   color:#fff;
@@ -115,11 +109,8 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
   <h1>🎟️ Painel da Rifa Solidária</h1>
   <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
 </header>
-
 <div id="msg" class="msg"></div>
-
 <section class="cards" id="cards"></section>
-
 <div style="overflow-x:auto">
 <table class="table">
   <thead>
@@ -133,11 +124,9 @@ footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
   </tbody>
 </table>
 </div>
-
 <footer>© 2025 Rifa Solidária • Painel Neon</footer>
-
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUB32yG1q8rOdCVsIkEZ2py5pAomC0zcfNKolblwBx4yi6aB2VzQtdmMFo4UTsk8c/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoItMVmS_qKTGe5z1PhYAvrPKBFGrfzyCmuRZfqQUNULzC163YJAnHIx1aTZlH9wsmHg/exec";
 let DATA = [];
 
 function toast(msg, error=false){
@@ -146,8 +135,6 @@ function toast(msg, error=false){
   el.textContent=msg;
   if(msg)setTimeout(()=>el.textContent="",3000);
 }
-
-// JSONP helper
 function jsonp(url){
   return new Promise((resolve,reject)=>{
     const cb="cb_"+Math.random().toString(36).slice(2);
@@ -159,7 +146,6 @@ function jsonp(url){
     function cleanup(){try{delete window[cb]}catch{};s.remove();}
   });
 }
-
 async function load(){
   document.getElementById("body").innerHTML="<tr><td colspan='10'>⏳ Carregando...</td></tr>";
   try{
@@ -174,7 +160,6 @@ async function load(){
     document.getElementById("body").innerHTML="<tr><td colspan='10'>Erro ao carregar</td></tr>";
   }
 }
-
 function renderCards(rows){
   const total=rows.length;
   const pagos=rows.filter(r=>r.status==="PAGO").length;
@@ -189,7 +174,6 @@ function renderCards(rows){
     <div class="card"><h3>Entregues</h3><span style="color:var(--info)">${entreg}</span></div>
   `;
 }
-
 function renderTable(rows){
   const tbody=document.getElementById("body");
   if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
@@ -217,10 +201,8 @@ function renderTable(rows){
     </tr>`;
   }).join("");
 }
-
 function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
 function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
-
 async function save(row){
   const status=document.getElementById(`sel-${row}`).value;
   try{
@@ -229,7 +211,6 @@ async function save(row){
     else toast("Erro: "+(res.error||"Falha"),true);
   }catch(e){toast(e.message,true);}
 }
-
 load();
 </script>
 </body>
