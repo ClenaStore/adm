@@ -1,135 +1,236 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Painel • Rifa Solidária</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🎟️ Painel da Rifa Solidária</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0b1220;--card:#0f172a;--ink:#eaf2ff;--muted:#95a3be;--line:#1f2a41;--ok:#16a34a;--warn:#f59e0b;--bad:#ef4444;}
-  *{box-sizing:border-box;font-family:Inter,system-ui}
-  body{margin:0;background:radial-gradient(circle at 20% -10%,#162751,#0b1120 70%);color:var(--ink)}
-  header{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
-  h1{margin:0;font-size:18px}
-  button,select{border:0;border-radius:8px}
-  .refresh{margin-left:auto;background:linear-gradient(90deg,#00e5ff,#7c3aed);padding:10px 14px;color:#fff;cursor:pointer}
-  main{padding:16px}
-  .msg{margin-bottom:10px;font-weight:600}
-  .table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
-  th,td{padding:10px;border-bottom:1px solid var(--line);font-size:14px}
-  th{background:#0c1830;text-align:left;color:#cfe3ff}
-  tr:last-child td{border-bottom:0}
-  .status{padding:4px 8px;border-radius:6px;font-weight:700;font-size:12px}
-  .S-RESERVADO{background:#22314a;color:#ffd88a}
-  .S-PAGO{background:#153a2a;color:#bdfcc5}
-  .S-CANCELADO{background:#3b1c1c;color:#ff9e9e}
-  .S-ENTREGUE{background:#133042;color:#aee9ff}
-  .row-actions{display:flex;gap:6px;align-items:center}
-  .sel{background:#0f1e3d;color:#fff;border:1px solid #1f335e;padding:6px 8px}
-  .salvar{background:var(--ok);color:#fff;padding:7px 10px;cursor:pointer}
+:root {
+  --bg:#05091b;
+  --card:#0f172a;
+  --line:#1f2f49;
+  --ink:#eaf2ff;
+  --muted:#94a3b8;
+  --accent:#00e5ff;
+  --ok:#16a34a;
+  --warn:#f59e0b;
+  --bad:#ef4444;
+  --info:#3b82f6;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui}
+body{
+  background:radial-gradient(circle at top,#0c1630,#020510 80%);
+  color:var(--ink);
+  min-height:100vh;
+  padding:12px;
+}
+header{
+  text-align:center;
+  margin-bottom:20px;
+}
+header h1{
+  font-family:'Orbitron',sans-serif;
+  color:var(--accent);
+  text-shadow:0 0 8px var(--accent);
+  font-size:1.7rem;
+  margin-bottom:10px;
+}
+.refresh{
+  background:linear-gradient(90deg,#00e5ff,#9333ea);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 20px;
+  font-weight:600;
+  font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,229,255,.5);
+  transition:.2s;
+}
+.refresh:hover{filter:brightness(1.1)}
+.refresh:active{transform:scale(.98)}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  margin-bottom:20px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 0 10px rgba(0,0,0,.4);
+}
+.card h3{font-size:1rem;margin-bottom:5px;color:var(--muted)}
+.card span{font-weight:700;font-size:1.4rem}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  background:var(--card);
+  border:1px solid var(--line);
+  box-shadow:0 0 10px rgba(0,0,0,.3);
+  border-radius:10px;
+  overflow:hidden;
+}
+th,td{padding:10px;border-bottom:1px solid var(--line);font-size:0.9rem;text-align:left}
+th{background:#13213b;color:#cdd9f0}
+tr:hover{background:#182745}
+.status{
+  padding:4px 8px;border-radius:6px;font-weight:700;font-size:0.8rem;
+}
+.RESERVADO{background:#312d16;color:var(--warn)}
+.PAGO{background:#102d1d;color:var(--ok)}
+.CANCELADO{background:#3b1c1c;color:var(--bad)}
+.ENTREGUE{background:#132d40;color:var(--info)}
+
+select{
+  background:#101a30;
+  color:#fff;
+  border:1px solid var(--line);
+  padding:6px;
+  border-radius:6px;
+}
+button.salvar{
+  background:var(--ok);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:6px 10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:.2s;
+}
+button.salvar:hover{filter:brightness(1.1)}
+.msg{text-align:center;margin-bottom:10px;font-weight:600;}
+footer{text-align:center;color:var(--muted);margin-top:20px;font-size:0.8rem}
 </style>
 </head>
 <body>
 <header>
   <h1>🎟️ Painel da Rifa Solidária</h1>
-  <button class="refresh" onclick="load()">🔄 Atualizar</button>
+  <button class="refresh" onclick="load()">🔄 Atualizar Lista</button>
 </header>
-<main>
-  <div id="msg" class="msg"></div>
-  <div style="overflow:auto">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th>
-          <th>Números</th><th>Qtd</th><th>Total</th><th>Data/Hora</th>
-          <th>Status</th><th>Mudar status</th>
-        </tr>
-      </thead>
-      <tbody id="body"><tr><td colspan="10">Carregando...</td></tr></tbody>
-    </table>
-  </div>
-</main>
+
+<div id="msg" class="msg"></div>
+
+<section class="cards" id="cards"></section>
+
+<div style="overflow-x:auto">
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Números</th>
+      <th>Qtd</th><th>Total (R$)</th><th>Data/Hora</th><th>Status</th><th>Mudar status</th>
+    </tr>
+  </thead>
+  <tbody id="body">
+    <tr><td colspan="10">⏳ Carregando...</td></tr>
+  </tbody>
+</table>
+</div>
+
+<footer>© 2025 Rifa Solidária • Painel Neon</footer>
 
 <script>
-  // 🔗 Cole aqui o link /exec do seu GAS
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyakFLkqZsiCC3KnCufr3MB86O-DF0Y1R1PAquWABGa5PzIQhZTS339oxQUKfpA4UC1Fw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyakFLkqZsiCC3KnCufr3MB86O-DF0Y1R1PAquWABGa5PzIQhZTS339oxQUKfpA4UC1Fw/exec";
+let DATA = [];
 
-  let DATA = [];
+function toast(msg, error=false){
+  const el=document.getElementById("msg");
+  el.style.color=error?"#ff6b81":"#7af59a";
+  el.textContent=msg;
+  if(msg)setTimeout(()=>el.textContent="",3000);
+}
 
-  function toast(t, error=false){
-    const el = document.getElementById('msg');
-    el.style.color = error ? "#ff6b81" : "#7af59a";
-    el.textContent = t;
-    if(t) setTimeout(()=> el.textContent='', 3000);
+// JSONP helper
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb="cb_"+Math.random().toString(36).slice(2);
+    window[cb]=(payload)=>{resolve(payload);cleanup();};
+    const s=document.createElement("script");
+    s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
+    s.onerror=()=>{reject(new Error("JSONP error"));cleanup();};
+    document.body.appendChild(s);
+    function cleanup(){try{delete window[cb]}catch{};s.remove();}
+  });
+}
+
+async function load(){
+  document.getElementById("body").innerHTML="<tr><td colspan='10'>⏳ Carregando...</td></tr>";
+  try{
+    const rows=await jsonp(`${SCRIPT_URL}?action=list`);
+    if(!Array.isArray(rows)) throw new Error("Formato inválido");
+    DATA=rows;
+    renderCards(rows);
+    renderTable(rows);
+    toast("✅ Dados atualizados");
+  }catch(e){
+    toast(e.message,true);
+    document.getElementById("body").innerHTML="<tr><td colspan='10'>Erro ao carregar</td></tr>";
   }
+}
 
-  // ---- JSONP helper (Promise) ----
-  function jsonp(url){
-    return new Promise((resolve, reject)=>{
-      const cb = "cb_"+Math.random().toString(36).slice(2);
-      window[cb] = (payload)=>{ resolve(payload); cleanup(); };
-      const s = document.createElement('script');
-      s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cb;
-      s.onerror = ()=>{ reject(new Error("JSONP error")); cleanup(); };
-      document.body.appendChild(s);
-      function cleanup(){ try{delete window[cb]}catch{}; s.remove(); }
-    });
-  }
+function renderCards(rows){
+  const total=rows.length;
+  const pagos=rows.filter(r=>r.status==="PAGO").length;
+  const reserv=rows.filter(r=>r.status==="RESERVADO").length;
+  const cancel=rows.filter(r=>r.status==="CANCELADO").length;
+  const entreg=rows.filter(r=>r.status==="ENTREGUE").length;
+  document.getElementById("cards").innerHTML=`
+    <div class="card"><h3>Total</h3><span style="color:var(--accent)">${total}</span></div>
+    <div class="card"><h3>Pagos</h3><span style="color:var(--ok)">${pagos}</span></div>
+    <div class="card"><h3>Reservados</h3><span style="color:var(--warn)">${reserv}</span></div>
+    <div class="card"><h3>Cancelados</h3><span style="color:var(--bad)">${cancel}</span></div>
+    <div class="card"><h3>Entregues</h3><span style="color:var(--info)">${entreg}</span></div>
+  `;
+}
 
-  async function load(){
-    document.getElementById('body').innerHTML = "<tr><td colspan='10'>Carregando...</td></tr>";
-    try{
-      const rows = await jsonp(`${SCRIPT_URL}?action=list`);
-      DATA = Array.isArray(rows) ? rows : [];
-      render(DATA);
-      toast("Registros carregados");
-    }catch(e){
-      document.getElementById('body').innerHTML = "<tr><td colspan='10'>Falha ao carregar</td></tr>";
-      toast(e.message,true);
-    }
-  }
+function renderTable(rows){
+  const tbody=document.getElementById("body");
+  if(!rows.length){tbody.innerHTML="<tr><td colspan='10'>Nenhum registro</td></tr>";return;}
+  tbody.innerHTML=rows.map(r=>{
+    const sClass=r.status?` ${r.status}`:"";
+    return `<tr>
+      <td>${r.rowNumber}</td>
+      <td>${esc(r.nome)}</td>
+      <td>${esc(r.telefone)}</td>
+      <td>${esc(r.email)}</td>
+      <td>${esc(r.numeros)}</td>
+      <td>${esc(r.qtd)}</td>
+      <td>${esc(r.total)}</td>
+      <td>${esc(r.dataHora)}</td>
+      <td><span class="status${sClass}">${esc(r.status)}</span></td>
+      <td>
+        <select id="sel-${r.rowNumber}">
+          ${opt("RESERVADO",r.status)}
+          ${opt("PAGO",r.status)}
+          ${opt("CANCELADO",r.status)}
+          ${opt("ENTREGUE",r.status)}
+        </select>
+        <button class="salvar" onclick="save(${r.rowNumber})">Salvar</button>
+      </td>
+    </tr>`;
+  }).join("");
+}
 
-  function render(rows){
-    const tbody = document.getElementById('body');
-    if(!rows.length){ tbody.innerHTML = "<tr><td colspan='10'>Nenhum registro</td></tr>"; return; }
-    tbody.innerHTML = rows.map(r=>{
-      const sclass = "S-" + String(r.status||"").toUpperCase();
-      return `<tr>
-        <td>${r.rowNumber}</td>
-        <td>${esc(r.nome)}</td>
-        <td>${esc(r.telefone)}</td>
-        <td>${esc(r.email)}</td>
-        <td>${esc(r.numeros)}</td>
-        <td>${esc(r.qtd)}</td>
-        <td>${esc(r.total)}</td>
-        <td>${esc(r.dataHora)}</td>
-        <td><span class="status ${sclass}">${esc(r.status||"")}</span></td>
-        <td class="row-actions">
-          <select id="sel-${r.rowNumber}" class="sel">
-            ${opt("RESERVADO", r.status)}
-            ${opt("PAGO", r.status)}
-            ${opt("CANCELADO", r.status)}
-            ${opt("ENTREGUE", r.status)}
-          </select>
-          <button class="salvar" onclick="save(${r.rowNumber})">Salvar</button>
-        </td>
-      </tr>`;
-    }).join('');
-  }
+function opt(v,cur){return `<option value="${v}" ${v===cur?"selected":""}>${v}</option>`;}
+function esc(s){return String(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
 
-  function opt(v, cur){ return `<option value="${v}" ${String(cur).toUpperCase()===v?"selected":""}>${v}</option>`; }
-  function esc(s){ return String(s??"").replace(/[&<>"]/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m])); }
+async function save(row){
+  const status=document.getElementById(`sel-${row}`).value;
+  try{
+    const res=await jsonp(`${SCRIPT_URL}?action=update&row=${row}&status=${encodeURIComponent(status)}`);
+    if(res.ok){toast("✅ Status atualizado");load();}
+    else toast("Erro: "+(res.error||"Falha"),true);
+  }catch(e){toast(e.message,true);}
+}
 
-  async function save(rowNumber){
-    const status = document.getElementById(`sel-${rowNumber}`).value;
-    try{
-      const res = await jsonp(`${SCRIPT_URL}?action=update&row=${rowNumber}&status=${encodeURIComponent(status)}`);
-      if(res && res.ok){ toast("Status atualizado"); load(); }
-      else { toast(res && res.error ? res.error : "Falha ao atualizar", true); }
-    }catch(e){ toast(e.message, true); }
-  }
-
-  load();
+load();
 </script>
 </body>
 </html>
